@@ -31,5 +31,5 @@ digital_out SweeperPiston = digital_out(Brain.ThreeWirePort.C);
 //Add your devices below, and don't forget to do the same in robot-config.h:
 
 void vexcodeInit( void ) {
-  RotationSensor.changed(rotation_sensor_callback);
+  // RotationSensor.changed(rotation_sensor_callback);
   }

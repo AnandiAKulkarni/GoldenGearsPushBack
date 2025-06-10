@@ -167,7 +167,7 @@ void pre_auton() {
     } else if (current_auton_selection == 8){
       current_auton_selection = 0;
     }
-    task::sleep(10);
+    wait(10, msec);
   }
 }
 
@@ -179,7 +179,6 @@ void pre_auton() {
  */
 
 void autonomous(void) {
-  hook_out_on_yellow();
   auto_started = true;
 }
 
@@ -197,23 +196,8 @@ void autonomous(void) {
 /*---------------------------------------------------------------------------*/
 
 void usercontrol(void) {
-    Controller.ButtonL1.pressed(intake_ring_in);
-    Controller.ButtonL2.pressed(intake_ring_out);
-    Controller.ButtonL1.released(intake_stop);
-    Controller.ButtonL2.released(intake_stop);
-    Controller.ButtonR2.pressed(chain_ring_down);
-    Controller.ButtonR1.pressed(chain_ring_up);
-    Controller.ButtonR1.released(chain_stop);
-    Controller.ButtonR2.released(chain_stop);
-    // sweeper_toggle has to be called with ButtonA
-    Controller.ButtonA.pressed(sweeper_toggle);
-    // This callback has to be called with ButtonX
-    Controller.ButtonX.pressed(hook_toggle);
-    //Controller.ButtonY.pressed(skills_corner_1_safe);
-    Controller.ButtonDown.pressed(arm_down);
-    Controller.ButtonLeft.pressed(arm_to_pickup);
-    Controller.ButtonRight.pressed(arm_stop);
-    Controller.ButtonUp.pressed(arm_up);
+    // Controller.ButtonL1.pressed(intake_ring_in);
+    
 
   // User control code here, inside the loop
   while (1) {
