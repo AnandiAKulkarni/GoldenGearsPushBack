@@ -10,5 +10,6 @@ extern bool isHangDown;
 extern bool isArmGoingToPickup;
 extern const float skills_turn_settle_time;
 extern const float skills_turn_timeout;
+void intake_block_in();
 
 void default_constants();

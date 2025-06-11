@@ -4,11 +4,12 @@ extern const float skills_turn_settle_time = 150;
 extern const float skills_turn_timeout = 2500;
 extern const float skills_drive_settle_time = 150;
 // AI Vision Color Descriptions
-aivision::colordesc AIVision__RED(1, 242, 90, 107, 10, 0.2);
-aivision::colordesc AIVision__BLUE(3, 53, 190, 229, 30, 0.2);
+aivision::colordesc AIVision7__BLUE(1, 31, 159, 192, 19, 0.42);
+aivision::colordesc AIVision7__RED(2, 238, 46, 43, 10, 0.15);
+aivision::colordesc AIVision7__YELLOW(3, 241, 186, 54, 10, 0.19);
 // AI Vision Code Descriptions
-aivision::codedesc AIVision__RED_BLUE(1, AIVision__RED, AIVision__BLUE);
-vex::aivision AIVision(PORT5, AIVision__RED, AIVision__BLUE, AIVision__RED_BLUE, aivision::ALL_AIOBJS);
+vex::aivision AIVision7(PORT7, AIVision7__BLUE, AIVision7__RED, AIVision7__YELLOW);
+
 
 
 void fast_turn(int angle) {
@@ -16,8 +17,19 @@ void fast_turn(int angle) {
   //  chassis.drive_stop(hold);
    chassis.turn_to_angle(angle,12,1,skills_turn_settle_time, skills_turn_timeout);
    chassis.drive_stop(hold);
-
 }
+
+void intake_block_in(){
+  LeftIntakeMotor.setVelocity(100, percent);
+  LeftIntakeMotor.spin(reverse);
+  RightIntakeMotor.setVelocity(100, percent);
+  RightIntakeMotor.spin(reverse);
+  FrontRoller.setVelocity(50, percent);
+  FrontRoller.spin(forward);
+  BackRollers.setVelocity(80, percent);
+  BackRollers.spin(reverse);
+}
+
 //For small, imprecise distances
 void drive_short_distance(double short_distance){
 // chassis.drive_distance(short_distance);
@@ -59,17 +71,16 @@ void default_constants(){
   // odom_constants();
   // chassis.set_coordinates(0, 0, 0);
   
-
-  Brain.Screen.printAt(5, 20, "%d", RotationSensor.value());
+  //Brain.Screen.printAt(5, 20, "%d", RotationSensor.value());
   Brain.Screen.printAt(5, 40, "Intake temp, chain temp:");
-  Brain.Screen.printAt(5, 60, "%d", IntakeMotor.temperature());
-  Brain.Screen.printAt(5, 80, "%d", ChainMotor.temperature());
+  //Brain.Screen.printAt(5, 60, "%d", IntakeMotor.temperature());
+  //Brain.Screen.printAt(5, 80, "%d", ChainMotor.temperature());
   Brain.Screen.printAt(5, 100, "Drive temp: LB, LM, LF, RB, RM, RF");
-  Brain.Screen.printAt(5, 120, "%d", LeftBack.temperature());
-  Brain.Screen.printAt(5, 140, "%d", LeftMiddle.temperature());
+  Brain.Screen.printAt(5, 120, "%d", LeftBackTop.temperature());
+  Brain.Screen.printAt(5, 140, "%d", LeftBackBottom.temperature());
   Brain.Screen.printAt(5, 160, "%d", LeftFront.temperature());
-  Brain.Screen.printAt(5, 180, "%d", RightBack.temperature());
-  Brain.Screen.printAt(5, 200, "%d", RightMiddle.temperature());
+  Brain.Screen.printAt(5, 180, "%d", RightBackTop.temperature());
+  Brain.Screen.printAt(5, 200, "%d", RightBackBottom.temperature());
   Brain.Screen.printAt(5, 220, "%d", RightFront.temperature());
 }
 
@@ -87,16 +98,13 @@ void odom_constants(){
   chassis.drive_min_voltage = 0;
 }
 void turnRight(){
-  LeftBack.spin(reverse,3,volt);
-  LeftMiddle.spin(reverse,3,volt);
+  LeftBackTop.spin(reverse,3,volt);
+  LeftBackBottom.spin(reverse,3,volt);
   LeftFront.spin(reverse,3,volt);
-  RightBack.spin(forward,3,volt);
-  RightMiddle.spin(forward,3,volt);
+  RightBackTop.spin(forward,3,volt);
+  RightBackBottom.spin(forward,3,volt);
   RightFront.spin(forward,3,volt);
 }
-
-
-
 
 /**
  * Should end in the same place it began, but the second movement
@@ -110,18 +118,4 @@ void tank_odom_test(){
   chassis.drive_to_point(24,24);
   chassis.drive_to_point(0,0);
   chassis.turn_to_angle(0);
-}
-
-/**
- * Drives in a square while making a full turn in the process. Should
- * end where it started.
- */
-
-void holonomic_odom_test(){
-  default_constants();
-  chassis.set_coordinates(0, 0, 0);
-  chassis.holonomic_drive_to_pose(0, 18, 90);
-  chassis.holonomic_drive_to_pose(18, 0, 180);
-  chassis.holonomic_drive_to_pose(0, 18, 270);
-  chassis.holonomic_drive_to_pose(0, 0, 0);
 }

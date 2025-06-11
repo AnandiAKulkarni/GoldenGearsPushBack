@@ -10,23 +10,20 @@ brain  Brain;
 controller Controller = controller();
 
 //The motor constructor takes motors as (port, ratio, reversed), so for example
-motor LeftFront = motor(PORT9, ratio6_1, false);
-motor LeftMiddle = motor(PORT13, ratio6_1, false);
-motor LeftBack = motor(PORT11, ratio6_1, false);
-motor RightFront = motor(PORT10, ratio6_1, true);
-motor RightMiddle = motor(PORT14, ratio6_1, true);
-motor RightBack = motor(PORT15, ratio6_1, true);
-motor ChainMotor = motor(PORT16, ratio6_1, true);
-rotation RotationSensor = rotation(PORT8);
-optical ColorSensor = optical(PORT19);
-aivision AISensor = aivision(PORT5);
-motor IntakeMotor = motor(PORT17, ratio6_1, true);
-motor ArmMotor = motor(PORT6, ratio6_1, false);
-digital_out HookPiston = digital_out(Brain.ThreeWirePort.B);
-digital_out HangPiston1 = digital_out(Brain.ThreeWirePort.D);
-digital_out HangPiston2 = digital_out(Brain.ThreeWirePort.E);
-digital_out BouncingIntakePiston = digital_out(Brain.ThreeWirePort.A);
-digital_out SweeperPiston = digital_out(Brain.ThreeWirePort.C);
+motor LeftFront = motor(PORT4, ratio6_1, false);
+motor LeftBackTop = motor(PORT3, ratio6_1, true);
+motor LeftBackBottom = motor(PORT5, ratio6_1, false);
+motor RightFront = motor(PORT2, ratio6_1, true);
+motor RightBackBottom = motor(PORT9, ratio6_1, true);
+motor RightBackTop = motor(PORT10, ratio6_1, false);
+motor LeftIntakeMotor = motor(PORT6, ratio6_1, true);
+motor RightIntakeMotor = motor(PORT7, ratio6_1, false);
+motor BackRollers = motor(PORT8, ratio6_1, true);
+motor FrontRoller = motor(PORT17, ratio6_1, true);
+//optical ColorSensor = optical(PORT19);
+//aivision AISensor = aivision(PORT5);
+digital_out MiddlePiston = digital_out(Brain.ThreeWirePort.H);
+digital_out HighPiston = digital_out(Brain.ThreeWirePort.G);
 
 //Add your devices below, and don't forget to do the same in robot-config.h:
 
