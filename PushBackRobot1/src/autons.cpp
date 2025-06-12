@@ -4,11 +4,15 @@ extern const float skills_turn_settle_time = 150;
 extern const float skills_turn_timeout = 2500;
 extern const float skills_drive_settle_time = 150;
 // AI Vision Color Descriptions
-aivision::colordesc AIVision7__BLUE(1, 31, 159, 192, 19, 0.42);
-aivision::colordesc AIVision7__RED(2, 238, 46, 43, 10, 0.15);
-aivision::colordesc AIVision7__YELLOW(3, 241, 186, 54, 10, 0.19);
+aivision::colordesc AISensor__BLUE(1, 31, 159, 192, 19, 0.42);
+aivision::colordesc AISensor__RED(2, 238, 46, 43, 10, 0.15);
+aivision::colordesc AISensor__YELLOW(3, 241, 186, 54, 10, 0.19);
 // AI Vision Code Descriptions
-vex::aivision AIVision7(PORT7, AIVision7__BLUE, AIVision7__RED, AIVision7__YELLOW);
+vex::aivision AISensor(PORT14, AISensor__BLUE, AISensor__RED, AISensor__YELLOW);
+bool blueRingDetected = false;
+int noBlueRingTimes = 0;
+int blueRingTimes = 0;
+int blockCertaintyLevel = 0;
 
 
 
@@ -19,6 +23,87 @@ void fast_turn(int angle) {
    chassis.drive_stop(hold);
 }
 
+int look_for_blue_blocks() {
+  while (true) {
+    // Get a snapshot of all Blue Color objects.
+    AISensor.takeSnapshot(AISensor__BLUE);
+    Brain.Screen.clearScreen();
+    Brain.Screen.setCursor(1, 1);
+    Brain.Screen.print(AISensor.objectCount);
+    // Check to make sure an object was detected in the snapshot before starting intake.
+    if (AISensor.objectCount > 0) {
+      blueRingDetected = true;
+      intake_block_in();
+    }
+    else
+    {
+      blueRingDetected = false;
+      wait(2,seconds);
+      intake_stop();
+    }
+    wait(5, msec);
+  }
+    return(0);
+}
+
+void AITest(){
+  //task detectBlueRings = task(look_for_blue_rings);
+  //vex::task() detectBlueBlocks = task(look_for_blue_blocks);
+
+  while (true) {
+    // Get a snapshot of all Blue Color objects.
+    AISensor.takeSnapshot(AISensor__BLUE);
+    Brain.Screen.clearScreen();
+    Brain.Screen.setCursor(1, 1);
+    Brain.Screen.print(AISensor.objectCount);
+    // Check to make sure an object was detected in the snapshot before starting intake.
+    if (AISensor.objectCount > 0) {
+      blueRingDetected = true;
+      intake_block_in();
+    }
+    else
+    {
+      blueRingDetected = false;
+      wait(2,seconds);
+      intake_stop();
+    }
+    wait(5, msec);
+    if(blueRingDetected == false){
+      noBlueRingTimes += 1;
+      turnRight();
+      blockCertaintyLevel = 0;
+    }
+    if(blueRingDetected == true){
+      blueRingTimes += 1;
+      blockCertaintyLevel += 1;
+      if (blockCertaintyLevel > 20){
+        intake_block_in();
+        chassis.drive_with_voltage(6,6);
+        wait(0.5,seconds);
+        chassis.drive_stop(coast);
+        blockCertaintyLevel = 0;
+      }
+      
+      //chassis.drive_with_voltage(3,3);
+    }
+    if(blueRingTimes > 1000){
+      chassis.drive_with_voltage(6,6);
+      wait(0.5,seconds);
+      chassis.drive_stop(coast);
+      blueRingTimes = 0;
+    }
+    if(noBlueRingTimes > 1000){
+      chassis.drive_with_voltage(6,6);
+      wait(0.8,seconds);
+      chassis.drive_stop(coast);
+      noBlueRingTimes = 0;
+    }
+    wait(5, msec);
+  }
+}
+
+
+
 void intake_block_in(){
   LeftIntakeMotor.setVelocity(100, percent);
   LeftIntakeMotor.spin(reverse);
@@ -28,6 +113,13 @@ void intake_block_in(){
   FrontRoller.spin(forward);
   BackRollers.setVelocity(80, percent);
   BackRollers.spin(reverse);
+}
+
+void intake_stop(){
+  LeftIntakeMotor.stop();
+  RightIntakeMotor.stop();
+  FrontRoller.stop();
+  BackRollers.stop();
 }
 
 //For small, imprecise distances

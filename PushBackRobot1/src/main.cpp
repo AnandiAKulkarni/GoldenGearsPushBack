@@ -178,6 +178,7 @@ void pre_auton() {
  */
 
 void autonomous(void) {
+  AITest();
   auto_started = true;
 }
 

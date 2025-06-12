@@ -16,6 +16,7 @@ extern motor BackRollers;
 extern motor FrontRoller;
 extern digital_out MiddlePiston;
 extern digital_out HighPiston;
+extern aivision AISensor;
 // extern rotation RotationSensor;
 // extern optical ColorSensor;
 // extern aivision AISensor;

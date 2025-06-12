@@ -10,12 +10,12 @@ brain  Brain;
 controller Controller = controller();
 
 //The motor constructor takes motors as (port, ratio, reversed), so for example
-motor LeftFront = motor(PORT4, ratio6_1, false);
-motor LeftBackTop = motor(PORT3, ratio6_1, true);
-motor LeftBackBottom = motor(PORT5, ratio6_1, false);
-motor RightFront = motor(PORT2, ratio6_1, true);
-motor RightBackBottom = motor(PORT9, ratio6_1, true);
-motor RightBackTop = motor(PORT10, ratio6_1, false);
+motor LeftFront = motor(PORT4, ratio6_1, true);
+motor LeftBackTop = motor(PORT2, ratio6_1, false);
+motor LeftBackBottom = motor(PORT5, ratio6_1, true);
+motor RightFront = motor(PORT21, ratio6_1, false);
+motor RightBackBottom = motor(PORT9, ratio6_1, false);
+motor RightBackTop = motor(PORT10, ratio6_1, true);
 motor LeftIntakeMotor = motor(PORT6, ratio6_1, true);
 motor RightIntakeMotor = motor(PORT7, ratio6_1, false);
 motor BackRollers = motor(PORT8, ratio6_1, true);
@@ -24,6 +24,7 @@ motor FrontRoller = motor(PORT17, ratio6_1, true);
 //aivision AISensor = aivision(PORT5);
 digital_out MiddlePiston = digital_out(Brain.ThreeWirePort.H);
 digital_out HighPiston = digital_out(Brain.ThreeWirePort.G);
+//aivision AISensor = aivision(PORT14);
 
 //Add your devices below, and don't forget to do the same in robot-config.h:
 

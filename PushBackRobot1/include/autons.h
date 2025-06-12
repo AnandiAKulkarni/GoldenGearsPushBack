@@ -11,5 +11,8 @@ extern bool isArmGoingToPickup;
 extern const float skills_turn_settle_time;
 extern const float skills_turn_timeout;
 void intake_block_in();
-
+void intake_stop();
+int look_for_blue_blocks();
+void AITest();
 void default_constants();
+void turnRight();
