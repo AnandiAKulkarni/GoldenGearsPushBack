@@ -47,56 +47,58 @@ int look_for_blue_blocks() {
 }
 
 void AITest(){
-  //task detectBlueRings = task(look_for_blue_rings);
-  //vex::task() detectBlueBlocks = task(look_for_blue_blocks);
-
+  //Start a loop that is constantly looking for blue blocks
   while (true) {
     // Get a snapshot of all Blue Color objects.
     AISensor.takeSnapshot(AISensor__BLUE);
-    Brain.Screen.clearScreen();
-    Brain.Screen.setCursor(1, 1);
-    Brain.Screen.print(AISensor.objectCount);
-    // Check to make sure an object was detected in the snapshot before starting intake.
+    // Check to make sure an object was detected before changing a class-wide field and starting the intake to pick it up.
     if (AISensor.objectCount > 0) {
       blueRingDetected = true;
       intake_block_in();
     }
+    //If no object is detected, set the boolean to false 
     else
     {
       blueRingDetected = false;
-      wait(2,seconds);
-      intake_stop();
     }
+    //Give the brain and sensors a break, give the boolean time to update
     wait(5, msec);
+
+    //If an object is NOT detected, increment a counter used to make sure there is no block, keep turning to keep scanning
     if(blueRingDetected == false){
       noBlueRingTimes += 1;
       turnRight();
+      //Make it clear that we are NOT SURE if we see a block
       blockCertaintyLevel = 0;
-    }
-    if(blueRingDetected == true){
-      blueRingTimes += 1;
-      blockCertaintyLevel += 1;
-      if (blockCertaintyLevel > 20){
-        intake_block_in();
-        chassis.drive_with_voltage(6,6);
-        wait(0.5,seconds);
-        chassis.drive_stop(coast);
-        blockCertaintyLevel = 0;
-      }
-      
-      //chassis.drive_with_voltage(3,3);
-    }
-    if(blueRingTimes > 1000){
-      chassis.drive_with_voltage(6,6);
-      wait(0.5,seconds);
-      chassis.drive_stop(coast);
-      blueRingTimes = 0;
-    }
-    if(noBlueRingTimes > 1000){
+      //If we haven't seen a block for a while, go to another location and reset the no block certainty counter to 0
+      if(noBlueRingTimes > 500){
+      intake_stop();
       chassis.drive_with_voltage(6,6);
       wait(0.8,seconds);
       chassis.drive_stop(coast);
       noBlueRingTimes = 0;
+    }
+    }
+    //If an object IS detected, increment a counter used to make sure there is a block
+    if(blueRingDetected == true){
+      blueRingTimes += 1;
+      blockCertaintyLevel += 1;
+      //If we see a block for a while but can't get it, let it go.
+      if(blueRingTimes > 300){
+      chassis.drive_with_voltage(-8,-1);
+      wait(0.6,seconds);
+      chassis.drive_stop(coast);
+      blueRingTimes = 0;
+      }
+      //THEN, if we are CERTAIN that there is a block, go for it with the intake
+      if (blockCertaintyLevel > 22){
+        intake_block_in();
+        chassis.drive_with_voltage(6,6);
+        wait(0.5,seconds);
+        chassis.drive_stop(coast);
+        //Once the block is picked up, set the certaintly level back to 0
+        blockCertaintyLevel = 0;
+      }
     }
     wait(5, msec);
   }
