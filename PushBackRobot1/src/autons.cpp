@@ -14,7 +14,7 @@ int noBlueRingTimes = 0;
 int blueRingTimes = 0;
 int blockCertaintyLevel = 0;
 
-
+//hi
 
 void fast_turn(int angle) {
   //  chassis.turn_to_angle(angle);
