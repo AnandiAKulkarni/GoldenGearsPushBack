@@ -17,3 +17,5 @@ void AITest();
 void default_constants();
 void turnRight();
 void scoreInMiddle();
+void scoreInHigh();
+void scoreInLow();

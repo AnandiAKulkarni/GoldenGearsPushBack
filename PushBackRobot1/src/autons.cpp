@@ -107,34 +107,41 @@ void AITest(){
 
 
 void intake_block_in(){
-  Chain.setVelocity(100, percent);
+  Chain.setVelocity(90, percent);
   Chain.spin(reverse);
-  BoxIntake.setVelocity(100, percent);
+  BoxIntake.setVelocity(90, percent);
   BoxIntake.spin(forward);
-  // FRoller.setVelocity(50, percent);
-  // FrontRoller.spin(forward);
-  // BackRollers.setVelocity(80, percent);
-  // BackRollers.spin(reverse);
 }
 
 void scoreInMiddle(){
-  Chain.setVelocity(100, percent);
+  Chain.setVelocity(90, percent);
   Chain.spin(reverse);
-  BoxIntake.setVelocity(100, percent);
+  BoxIntake.setVelocity(90, percent);
   BoxIntake.spin(reverse);
-  HighRoller.setVelocity(100, percent);
+  HighRoller.setVelocity(90, percent);
   HighRoller.spin(forward);
-  // FRoller.setVelocity(50, percent);
-  // FrontRoller.spin(forward);
-  // BackRollers.setVelocity(80, percent);
-  // BackRollers.spin(reverse);
+}
+
+void scoreInLow(){
+  Chain.setVelocity(90, percent);
+  Chain.spin(forward);
+  BoxIntake.setVelocity(90, percent);
+  BoxIntake.spin(reverse);
+}
+
+void scoreInHigh(){
+  Chain.setVelocity(90, percent);
+  Chain.spin(reverse);
+  BoxIntake.setVelocity(90, percent);
+  BoxIntake.spin(reverse);
+  HighRoller.setVelocity(90, percent);
+  HighRoller.spin(reverse);
 }
 
 void intake_stop(){
-  // LeftIntakeMotor.stop();
-  // RightIntakeMotor.stop();
-  // FrontRoller.stop();
-  // BackRollers.stop();
+  Chain.stop();
+  BoxIntake.stop();
+  HighRoller.stop();
 }
 
 //For small, imprecise distances

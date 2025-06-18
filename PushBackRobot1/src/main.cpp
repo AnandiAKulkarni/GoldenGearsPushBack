@@ -85,7 +85,7 @@ PORT3,     -PORT4,
 //If you are using position tracking, this is the Forward Tracker port (the tracker which runs parallel to the direction of the chassis).
 //If this is a rotation sensor, enter it in "PORT1" format, inputting the port below.
 //If this is an encoder, enter the port as an integer. Triport A will be a "1", Triport B will be a "2", etc.
-PORT20,
+PORT17,
 
 //Input the Forward Tracker diameter (reverse it to make the direction switch):
 2.75,
@@ -188,7 +188,13 @@ void autonomous(void) {
 
 void usercontrol(void) {
     Controller.ButtonL1.pressed(intake_block_in);
+    Controller.ButtonL1.released(intake_stop);
     Controller.ButtonL2.pressed(scoreInMiddle);
+    Controller.ButtonL2.released(intake_stop);
+    Controller.ButtonR1.pressed(scoreInLow);
+    Controller.ButtonR1.released(intake_stop);
+    Controller.ButtonR2.pressed(scoreInHigh);
+    Controller.ButtonR2.released(intake_stop);
 
   // User control code here, inside the loop
   while (1) {
