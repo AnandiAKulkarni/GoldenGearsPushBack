@@ -107,21 +107,34 @@ void AITest(){
 
 
 void intake_block_in(){
-  LeftIntakeMotor.setVelocity(100, percent);
-  LeftIntakeMotor.spin(reverse);
-  RightIntakeMotor.setVelocity(100, percent);
-  RightIntakeMotor.spin(reverse);
-  FrontRoller.setVelocity(50, percent);
-  FrontRoller.spin(forward);
-  BackRollers.setVelocity(80, percent);
-  BackRollers.spin(reverse);
+  Chain.setVelocity(100, percent);
+  Chain.spin(reverse);
+  BoxIntake.setVelocity(100, percent);
+  BoxIntake.spin(forward);
+  // FRoller.setVelocity(50, percent);
+  // FrontRoller.spin(forward);
+  // BackRollers.setVelocity(80, percent);
+  // BackRollers.spin(reverse);
+}
+
+void scoreInMiddle(){
+  Chain.setVelocity(100, percent);
+  Chain.spin(reverse);
+  BoxIntake.setVelocity(100, percent);
+  BoxIntake.spin(reverse);
+  HighRoller.setVelocity(100, percent);
+  HighRoller.spin(forward);
+  // FRoller.setVelocity(50, percent);
+  // FrontRoller.spin(forward);
+  // BackRollers.setVelocity(80, percent);
+  // BackRollers.spin(reverse);
 }
 
 void intake_stop(){
-  LeftIntakeMotor.stop();
-  RightIntakeMotor.stop();
-  FrontRoller.stop();
-  BackRollers.stop();
+  // LeftIntakeMotor.stop();
+  // RightIntakeMotor.stop();
+  // FrontRoller.stop();
+  // BackRollers.stop();
 }
 
 //For small, imprecise distances

@@ -122,18 +122,9 @@ void pre_auton() {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
   default_constants();
-  //HangPiston1.set(true);
-  // chassis.set_coordinates(0, 0, 0);
-
+  //set drive coordinates here
 
   while(!auto_started){
-    Brain.Screen.clearScreen();
-    Brain.Screen.printAt(5, 20, "JAR Template v1.2.0");
-    Brain.Screen.printAt(5, 40, "Battery Percentage:");
-    Brain.Screen.printAt(5, 60, "%d", Brain.Battery.capacity());
-    Brain.Screen.printAt(5, 80, "Chassis Heading Reading:");
-    Brain.Screen.printAt(5, 100, "%f", chassis.get_absolute_heading());
-    Brain.Screen.printAt(5, 120, "Selected Auton:");
     switch(current_auton_selection){
       case 0:
         Brain.Screen.printAt(5, 140, "Auton 1");
@@ -197,7 +188,7 @@ void autonomous(void) {
 
 void usercontrol(void) {
     Controller.ButtonL1.pressed(intake_block_in);
-    
+    Controller.ButtonL2.pressed(scoreInMiddle);
 
   // User control code here, inside the loop
   while (1) {
@@ -209,7 +200,6 @@ void usercontrol(void) {
     // Insert user code here. This is where you use the joystick values to
     // update your motors, etc.
     // ........................................................................
-    
     
     //Replace this line with chassis.control_tank(); for tank drive 
     //or chassis.control_holonomic(); for holo drive.

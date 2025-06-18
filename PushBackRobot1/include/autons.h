@@ -16,3 +16,4 @@ int look_for_blue_blocks();
 void AITest();
 void default_constants();
 void turnRight();
+void scoreInMiddle();
