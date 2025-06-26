@@ -77,18 +77,18 @@ PORT17,
 
 //FOR HOLONOMIC DRIVES ONLY: Input your drive motors by position. This is only necessary for holonomic drives, otherwise this section can be left alone.
 //LF:      //RF:    
-PORT1,     -PORT2,
+NULL,     NULL,
 
 //LB:      //RB: 
-PORT3,     -PORT4,
+NULL,     NULL,
 
 //If you are using position tracking, this is the Forward Tracker port (the tracker which runs parallel to the direction of the chassis).
 //If this is a rotation sensor, enter it in "PORT1" format, inputting the port below.
 //If this is an encoder, enter the port as an integer. Triport A will be a "1", Triport B will be a "2", etc.
-3,
+NULL,
 
 //Input the Forward Tracker diameter (reverse it to make the direction switch):
-2.75,
+NULL,
 
 //Input Forward Tracker center distance (a positive distance corresponds to a tracker on the right side of the robot, negative is left.)
 //For a zero tracker tank drive with odom, put the positive distance from the center of the robot to the right side of the drive.
@@ -96,13 +96,13 @@ PORT3,     -PORT4,
 6.25,
 
 //Input the Sideways Tracker Port, following the same steps as the Forward Tracker Port:
-1,
+NULL,
 
 //Sideways tracker diameter (reverse to make the direction switch):
--2.75,
+NULL,
 
 //Sideways tracker center distance (positive distance is behind the center of the robot, negative is in front):
-5.5
+NULL
 );
 
 int current_auton_selection = 0;
@@ -171,8 +171,7 @@ void pre_auton() {
 
 
 void autonomous(void) {
-  //odometry.set_position(0, 0, 0, 0, 0);
-  chassis.drive_to_pose(2,2,0);
+  chassis.drive_to_point(-2,-1);
   auto_started = true;
 }
 
