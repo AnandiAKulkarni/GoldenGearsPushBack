@@ -14,7 +14,16 @@ int noBlueRingTimes = 0;
 int blueRingTimes = 0;
 int blockCertaintyLevel = 0;
 
-//hi
+
+/**
+ * Performs a fast turn to a specified angle using the chassis.
+ * 
+ * @param angle The target angle in degrees to which the chassis should turn.
+ * 
+ * The function uses predefined turn constants for voltage, settle time, 
+ * and timeout to achieve a quick and efficient turn. Once the turn is 
+ * complete, the chassis is stopped with a hold.
+ */
 
 void fast_turn(int angle) {
   //  chassis.turn_to_angle(angle);
@@ -104,19 +113,54 @@ void AITest(){
   }
 }
 
+void drive_to_point_local(float xPosition, float yPosition, float velocity) {
+  float currentX = GPSSensor.xPosition();
+  float currentY = GPSSensor.yPosition();
+  float distance = sqrt(pow(xPosition - currentX, 2) + pow(yPosition - currentY, 2));
+  float dx = xPosition - currentX;
+  float dy = yPosition - currentY;
+  float angle = atan2(dy, dx);
 
+  if (dx < 0 && dy > 0) {
+    angle += M_PI;
+  } else if (dx < 0 && dy < 0) {
+    angle -= M_PI;
+  }
+
+  chassis.drive_with_voltage(velocity * cos(angle), velocity * sin(angle));
+  while (distance > 1) {
+    currentX = GPSSensor.xPosition();
+    currentY = GPSSensor.yPosition();
+    distance = sqrt(pow(xPosition - currentX, 2) + pow(yPosition - currentY, 2));
+    dx = xPosition - currentX;
+    dy = yPosition - currentY;
+    angle = atan2(dy, dx);
+
+    if (dx < 0 && dy > 0) {
+      angle += M_PI;
+    } else if (dx < 0 && dy < 0) {
+      angle -= M_PI;
+    }
+
+    chassis.drive_with_voltage(velocity * cos(angle), velocity * sin(angle));
+    wait(20, msec);
+  }
+  chassis.drive_stop(coast);
+}
 
 void intake_block_in(){
   Chain.setVelocity(90, percent);
   Chain.spin(reverse);
   BoxIntake.setVelocity(90, percent);
   BoxIntake.spin(forward);
+  HighRoller.setVelocity(90, percent);
+  HighRoller.spin(reverse);
 }
 
 void scoreInMiddle(){
-  Chain.setVelocity(90, percent);
+  Chain.setVelocity(100, percent);
   Chain.spin(reverse);
-  BoxIntake.setVelocity(90, percent);
+  BoxIntake.setVelocity(50, percent);
   BoxIntake.spin(reverse);
   HighRoller.setVelocity(90, percent);
   HighRoller.spin(forward);
@@ -130,9 +174,9 @@ void scoreInLow(){
 }
 
 void scoreInHigh(){
-  Chain.setVelocity(90, percent);
+  Chain.setVelocity(100, percent);
   Chain.spin(reverse);
-  BoxIntake.setVelocity(90, percent);
+  BoxIntake.setVelocity(50, percent);
   BoxIntake.spin(reverse);
   HighRoller.setVelocity(90, percent);
   HighRoller.spin(reverse);

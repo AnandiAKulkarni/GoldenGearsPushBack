@@ -85,7 +85,7 @@ PORT3,     -PORT4,
 //If you are using position tracking, this is the Forward Tracker port (the tracker which runs parallel to the direction of the chassis).
 //If this is a rotation sensor, enter it in "PORT1" format, inputting the port below.
 //If this is an encoder, enter the port as an integer. Triport A will be a "1", Triport B will be a "2", etc.
-PORT17,
+3,
 
 //Input the Forward Tracker diameter (reverse it to make the direction switch):
 2.75,
@@ -93,7 +93,7 @@ PORT17,
 //Input Forward Tracker center distance (a positive distance corresponds to a tracker on the right side of the robot, negative is left.)
 //For a zero tracker tank drive with odom, put the positive distance from the center of the robot to the right side of the drive.
 //This distance is in inches:
--2,
+6.25,
 
 //Input the Sideways Tracker Port, following the same steps as the Forward Tracker Port:
 1,
@@ -168,8 +168,9 @@ void pre_auton() {
  * autons.cpp and declared in autons.h.
  */
 
+
 void autonomous(void) {
-  AITest();
+  chassis.drive_to_pose()
   auto_started = true;
 }
 

@@ -18,4 +18,5 @@ extern digital_out IntakePiston;
 extern digital_out HighPiston;
 //AI Vision
 extern aivision AISensor;
+extern gps GPSSensor;
 void  vexcodeInit( void );

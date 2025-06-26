@@ -24,6 +24,8 @@ motor HighRoller = motor(PORT9, ratio6_1, true);
 digital_out IntakePiston = digital_out(Brain.ThreeWirePort.H);
 digital_out HighPiston = digital_out(Brain.ThreeWirePort.G);
 //AI Vision is defined in autons.cpp
+//GPS
+gps GPSSensor = gps(PORT3, 0.00, 0.00, inches, 180);
 
 void vexcodeInit( void ) {
   //this is used to calibrate everything before the game starts
