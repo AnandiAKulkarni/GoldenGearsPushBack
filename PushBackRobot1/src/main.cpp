@@ -51,7 +51,7 @@ motor_group(LeftFront, LeftBackBottom, LeftBackTop),
 motor_group(RightFront, RightBackBottom, RightBackTop),
 
 //Specify the PORT NUMBER of your inertial sensor, in PORT format (i.e. "PORT1", not simply "1"):
-PORT11,
+PORT17,
 
 //Input your wheel diameter. (4" omnis are actually closer to 4.125"):
 3.25,
@@ -103,13 +103,14 @@ PORT3,     -PORT4,
 
 //Sideways tracker center distance (positive distance is behind the center of the robot, negative is in front):
 5.5
-
 );
 
 int current_auton_selection = 0;
 bool auto_started = false;
 bool isHangdown = true;
 bool isArmGoingToPickup = false;
+
+Odom odometry = Odom();
 
 /**
  * Function before autonomous. It prints the current auton number on the screen
@@ -170,7 +171,8 @@ void pre_auton() {
 
 
 void autonomous(void) {
-  chassis.drive_to_pose()
+  //odometry.set_position(0, 0, 0, 0, 0);
+  chassis.drive_to_pose(2,2,0);
   auto_started = true;
 }
 
