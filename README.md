@@ -1,6 +1,6 @@
 How to use:
-1) Connect the project to Visual Studios by opening it there. Make sure you can commit straight from Visual Studios.
-2) Download the Visual Studios VEX extension and create a new project - this repository. 
+1) Download the Visual Studios VEX extension and import this repository. 
+2) Open the project in Visual Studios. Make sure you can commit straight from Visual Studios.
 3) Install Windsurf for Visual Studios for AI coding.
 
 Purpose of this repository:
