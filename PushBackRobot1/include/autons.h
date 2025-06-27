@@ -20,4 +20,5 @@ void scoreInMiddle();
 void scoreInHigh();
 void scoreInLow();
 void gps_test();
+void tank_odom_test();
 void drive_to_point_local(float xPosition, float yPosition, float velocity);

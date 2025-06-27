@@ -171,7 +171,8 @@ void pre_auton() {
 
 
 void autonomous(void) {
-  chassis.drive_to_point(-2,-1);
+  // chassis.drive_to_point(3,3);
+  tank_odom_test();
   auto_started = true;
 }
 

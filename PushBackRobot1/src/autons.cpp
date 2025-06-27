@@ -209,37 +209,17 @@ chassis.drive_stop(hold);
  * drive, heading, turning, and swinging, as well as the PID and
  * exit conditions, check the docs.
  */
-
 void default_constants(){
-  // Each constant set is in the form of (maxVoltage, kP, kI, kD, startI).  
-  chassis.set_drive_constants(10, 1.5, 2, 10, 0); //  chassis.set_drive_constants(10, 1.5, 0, 10, 0);
-  // 0.06 KI - works on stright but not on slanted field
-  // 2 KI - works better - 0.5 deviationc inside on down slope 
-  // 2 KI - works better - 0.5 deviationc on up slope 
-
-  chassis.set_heading_constants(6, .4, 0.03, 1, 0); //chassis.set_heading_constants(6, .4, 0, 1, 0);
-  chassis.set_turn_constants(12, .4, 0.03, 3.95, 15);
+  // Each constant set is in the form of (maxVoltage, kP, kI, kD, startI).
+  chassis.set_drive_constants(10, 1.5, 0, 10, 0);
+  chassis.set_heading_constants(6, .4, 0, 1, 0);
+  chassis.set_turn_constants(12, .4, .03, 3, 15);
   chassis.set_swing_constants(12, .3, .001, 2, 15);
 
   // Each exit condition set is in the form of (settle_error, settle_time, timeout).
-  chassis.set_drive_exit_conditions(1.5, 300, 2000);
+  chassis.set_drive_exit_conditions(1.5, 300, 5000);
   chassis.set_turn_exit_conditions(1, 300, 3000);
   chassis.set_swing_exit_conditions(1, 300, 3000);
-  
-  // odom_constants();
-  // chassis.set_coordinates(0, 0, 0);
-  
-  //Brain.Screen.printAt(5, 20, "%d", RotationSensor.value());
-  Brain.Screen.printAt(5, 40, "Intake temp, chain temp:");
-  //Brain.Screen.printAt(5, 60, "%d", IntakeMotor.temperature());
-  //Brain.Screen.printAt(5, 80, "%d", ChainMotor.temperature());
-  Brain.Screen.printAt(5, 100, "Drive temp: LB, LM, LF, RB, RM, RF");
-  Brain.Screen.printAt(5, 120, "%d", LeftBackTop.temperature());
-  Brain.Screen.printAt(5, 140, "%d", LeftBackBottom.temperature());
-  Brain.Screen.printAt(5, 160, "%d", LeftFront.temperature());
-  Brain.Screen.printAt(5, 180, "%d", RightBackTop.temperature());
-  Brain.Screen.printAt(5, 200, "%d", RightBackBottom.temperature());
-  Brain.Screen.printAt(5, 220, "%d", RightFront.temperature());
 }
 
 /**
@@ -249,6 +229,7 @@ void default_constants(){
  */
 
 void odom_constants(){
+  default_constants();
   chassis.heading_max_voltage = 10;
   chassis.drive_max_voltage = 8;
   chassis.drive_settle_error = 3;
@@ -269,11 +250,12 @@ void turnRight(){
  * will be curved while the first is straight.
  */
 
+
 void tank_odom_test(){
-  default_constants();
+  odom_constants();
   chassis.set_coordinates(0, 0, 0);
-  chassis.turn_to_point(24, 24);
-  chassis.drive_to_point(24,24);
+  chassis.turn_to_point(3, 3);
+  chassis.drive_to_point(3,3);
   chassis.drive_to_point(0,0);
   chassis.turn_to_angle(0);
 }

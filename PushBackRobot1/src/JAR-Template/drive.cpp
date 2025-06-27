@@ -271,7 +271,9 @@ void Drive::turn_to_angle(float angle, float turn_max_voltage, float turn_settle
     float output = turnPID.compute(error);
     output = clamp(output, -turn_max_voltage, turn_max_voltage);
     drive_with_voltage(output, -output);
-    
+    // vex::task::sleep(10);
+        this_thread::sleep_for(10);
+
   }
 }
 
@@ -319,7 +321,9 @@ void Drive::drive_distance(float distance, float heading, float drive_max_voltag
     heading_output = clamp(heading_output, -heading_max_voltage, heading_max_voltage);
 
     drive_with_voltage(drive_output+heading_output, drive_output-heading_output);
-    wait(10, msec);
+    // task::sleep(10);
+        this_thread::sleep_for(10);
+
   }
 }
 
@@ -343,7 +347,9 @@ void Drive::left_swing_to_angle(float angle, float swing_max_voltage, float swin
     output = clamp(output, -turn_max_voltage, turn_max_voltage);
     DriveL.spin(fwd, output, volt);
     DriveR.stop(hold);
-    wait(10, msec);
+    // task::sleep(10);
+        this_thread::sleep_for(10);
+
   }
 }
 
@@ -359,7 +365,9 @@ void Drive::right_swing_to_angle(float angle, float swing_max_voltage, float swi
     output = clamp(output, -turn_max_voltage, turn_max_voltage);
     DriveR.spin(reverse, output, volt);
     DriveL.stop(hold);
-    wait(10, msec);
+    // task::sleep(10);
+        this_thread::sleep_for(10);
+
   }
 }
 
@@ -403,7 +411,9 @@ float Drive::get_SidewaysTracker_position(){
 void Drive::position_track(){
   while(1){
     odom.update_position(get_ForwardTracker_position(), get_SidewaysTracker_position(), get_absolute_heading());
-    wait(5, msec);
+    // task::sleep(5);
+        this_thread::sleep_for(5);
+
   }
 }
 
@@ -430,11 +440,11 @@ void Drive::set_heading(float orientation_deg){
  * @param orientation_deg Desired heading in degrees.
  */
 
-// void Drive::set_coordinates(float X_position, float Y_position, float orientation_deg){
-//   odom.set_position(X_position, Y_position, orientation_deg, get_ForwardTracker_position(), get_SidewaysTracker_position());
-//   set_heading(orientation_deg);
-//   odom_task = task(position_track_task);
-// }
+void Drive::set_coordinates(float X_position, float Y_position, float orientation_deg){
+  odom.set_position(X_position, Y_position, orientation_deg, get_ForwardTracker_position(), get_SidewaysTracker_position());
+  set_heading(orientation_deg);
+  odom_task = vex::task(position_track_task);
+}
 
 /**
  * Gets the robot's x.
@@ -508,7 +518,9 @@ void Drive::drive_to_point(float X_position, float Y_position, float drive_min_v
     drive_output = clamp_min_voltage(drive_output, drive_min_voltage);
 
     drive_with_voltage(left_voltage_scaling(drive_output, heading_output), right_voltage_scaling(drive_output, heading_output));
-    wait(10, msec);
+    // task::sleep(10);
+        this_thread::sleep_for(10);
+
   }
 }
 
@@ -593,7 +605,8 @@ void Drive::drive_to_pose(float X_position, float Y_position, float angle, float
     drive_output = clamp_min_voltage(drive_output, drive_min_voltage);
 
     drive_with_voltage(left_voltage_scaling(drive_output, heading_output), right_voltage_scaling(drive_output, heading_output));
-    wait(10, msec);
+    this_thread::sleep_for(10);
+    // vex::task::sleep(10);
   }
 }
 
@@ -628,7 +641,9 @@ void Drive::turn_to_point(float X_position, float Y_position, float extra_angle_
     float output = turnPID.compute(error);
     output = clamp(output, -turn_max_voltage, turn_max_voltage);
     drive_with_voltage(output, -output);
-    wait(10, msec);
+    // task::sleep(10);
+    this_thread::sleep_for(10);
+
   }
 }
 
@@ -679,7 +694,9 @@ void Drive::holonomic_drive_to_pose(float X_position, float Y_position, float an
     DriveLB.spin(fwd, drive_output*cos(-to_rad(get_absolute_heading()) - heading_error + 3*M_PI/4) + turn_output, volt);
     DriveRB.spin(fwd, drive_output*cos(to_rad(get_absolute_heading()) + heading_error - M_PI/4) - turn_output, volt);
     DriveRF.spin(fwd, drive_output*cos(-to_rad(get_absolute_heading()) - heading_error + 3*M_PI/4) - turn_output, volt);
-    wait(10, msec);
+    // task::sleep(10);
+        this_thread::sleep_for(10);
+
   }
 }
 
